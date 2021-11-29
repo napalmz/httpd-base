@@ -26,6 +26,9 @@ ENV APACHE_PID_FILE /var/run/apache2.pid
 # Expose apache.
 EXPOSE 80
 
+# Setup HEALTHCHECK.
+HEALTHCHECK CMD curl --fail http://localhost:80 || exit 1
+
 # Copy this repo into place.
 ADD www /var/www/site
 
