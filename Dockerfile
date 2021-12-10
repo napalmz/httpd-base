@@ -2,11 +2,18 @@ FROM ubuntu:latest
 MAINTAINER NapalmZ <admin@napalmz.eu>
 
 # PHP Version
-ENV PHPVER=7.4
+ENV PHPVER=8.1
 
-# Install apache, PHP, and supplimentary programs. openssh-server, curl, and lynx-cur are for debugging the container.
-RUN apt-get update && apt-get -y upgrade && DEBIAN_FRONTEND=noninteractive apt-get -y install \
-    apache2 php${PHPVER} php${PHPVER}-mysql libapache2-mod-php${PHPVER} curl lynx-common
+# Add specific repository for newer PHP versions
+RUN apt-get install software-properties-common && \
+    add-apt-repository ppa:ondrej/php -y
+
+# Install apache, PHP, and supplimentary programs. curl and lynx-cur are for debugging the container.
+RUN apt-get update && apt-get -y upgrade && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install \
+    curl lynx-common \
+    apache2 \
+    php${PHPVER} php${PHPVER}-mysql libapache2-mod-php${PHPVER}
 
 # Enable apache mods.
 RUN a2enmod php${PHPVER}
