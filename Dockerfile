@@ -5,7 +5,7 @@ MAINTAINER NapalmZ <admin@napalmz.eu>
 ENV PHPVER=8.1
 
 # Add specific repository for newer PHP versions
-RUN apt-get install software-properties-common && \
+RUN apt-get install software-properties-common -y && \
     add-apt-repository ppa:ondrej/php -y
 
 # Install apache, PHP, and supplimentary programs. curl and lynx-cur are for debugging the container.
