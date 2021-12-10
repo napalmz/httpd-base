@@ -2,7 +2,7 @@ FROM ubuntu:latest
 MAINTAINER NapalmZ <admin@napalmz.eu>
 
 # PHP Version
-ENV PHPVER=8.1„
+ENV PHPVER=8.1
 
 # Install apache, PHP, and supplimentary programs. curl and lynx-cur are for debugging the container.
 RUN apt-get update && apt-get -y upgrade && \
