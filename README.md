@@ -2,6 +2,8 @@
 
 A simple Apache httpd implementation for fast website deployment.
 
+[![Docker Image CI](https://github.com/napalmz/httpd-base/actions/workflows/main.yml/badge.svg)](https://github.com/napalmz/httpd-base/actions/workflows/main.yml)
+
 Usage example:
 
 ```
