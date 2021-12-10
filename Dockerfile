@@ -3,6 +3,7 @@ MAINTAINER NapalmZ <admin@napalmz.eu>
 
 # PHP Version
 ENV PHPVER=8.1
+ENV TZ=Europe/Rome
 
 # Install apache, PHP, and supplimentary programs. curl and lynx-cur are for debugging the container.
 RUN apt-get update && apt-get -y upgrade && \
@@ -10,7 +11,7 @@ RUN apt-get update && apt-get -y upgrade && \
     add-apt-repository ppa:ondrej/php -y && \
     apt-get update && apt-get -y upgrade && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install \
-    curl lynx-common \
+    curl lynx-common tzdata \
     apache2 \
     php${PHPVER} php${PHPVER}-mysql libapache2-mod-php${PHPVER}
 
@@ -19,8 +20,8 @@ RUN a2enmod php${PHPVER}
 RUN a2enmod rewrite
 
 # Update the PHP.ini file, enable <? ?> tags and quieten logging.
-RUN sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php/${PHPVER}/apache2/php.ini
-RUN sed -i "s/error_reporting = .*$/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/" /etc/php/${PHPVER}/apache2/php.ini
+RUN sed -i -r "s/short_open_tag = Off/short_open_tag = On/g" /etc/php/${PHPVER}/apache2/php.ini
+RUN sed -i -r "s/error_reporting = .*$/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/g" /etc/php/${PHPVER}/apache2/php.ini
 
 # Manually set up the apache environment variables
 ENV APACHE_RUN_USER www-data
