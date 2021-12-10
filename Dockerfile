@@ -2,14 +2,13 @@ FROM ubuntu:latest
 MAINTAINER NapalmZ <admin@napalmz.eu>
 
 # PHP Version
-ENV PHPVER=8.1
-
-# Add specific repository for newer PHP versions
-RUN apt-get install software-properties-common -y && \
-    add-apt-repository ppa:ondrej/php -y
+ENV PHPVER=8.1„
 
 # Install apache, PHP, and supplimentary programs. curl and lynx-cur are for debugging the container.
 RUN apt-get update && apt-get -y upgrade && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install software-properties-common && \
+    add-apt-repository ppa:ondrej/php -y && \
+    apt-get update && apt-get -y upgrade && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install \
     curl lynx-common \
     apache2 \
@@ -21,7 +20,7 @@ RUN a2enmod rewrite
 
 # Update the PHP.ini file, enable <? ?> tags and quieten logging.
 RUN sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php/${PHPVER}/apache2/php.ini
-RUN sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php/${PHPVER}/apache2/php.ini
+RUN sed -i "s/error_reporting = .*$/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/" /etc/php/${PHPVER}/apache2/php.ini
 
 # Manually set up the apache environment variables
 ENV APACHE_RUN_USER www-data
