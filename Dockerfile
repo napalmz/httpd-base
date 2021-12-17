@@ -21,7 +21,7 @@ RUN a2enmod rewrite
 
 # Update the PHP.ini file, enable <? ?> tags and quieten logging.
 RUN sed -i -r "s/short_open_tag = Off/short_open_tag = On/g" /etc/php/${PHPVER}/apache2/php.ini
-RUN sed -i -r "s/error_reporting = .*$/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/g" /etc/php/${PHPVER}/apache2/php.ini
+#RUN sed -i -r "s/error_reporting = .*$/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/g" /etc/php/${PHPVER}/apache2/php.ini
 
 # Manually set up the apache environment variables
 ENV APACHE_RUN_USER www-data
